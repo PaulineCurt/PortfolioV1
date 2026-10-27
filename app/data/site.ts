@@ -4,6 +4,21 @@ export const site = frenchSpacing({
   name: 'Pauline',
   fullName: 'Pauline Curt',
   headline: ['Développeuse', 'front-end', 'Vue et Nuxt'],
+  contactTitle: ['On en', 'parle ?'],
+  // Error page (app/error.vue)
+  errors: {
+    notFound: {
+      label: 'Erreur 404',
+      title: ['Page', 'introuvable'],
+      text: "Visiblement, cette page s'est effondrée. Tu peux essayer de la remettre d'aplomb, ou rentrer à l'accueil.",
+    },
+    generic: {
+      label: 'Erreur',
+      title: ['Oups'],
+      text: "Quelque chose s'est mal passé. Réessaie depuis l'accueil.",
+    },
+    back: "Retour à l'accueil",
+  },
   intro:
     "Je construis des interfaces soignées, du composant jusqu'à l'endpoint, et je teste ce que je livre.",
   location: 'Basée à Aix-Marseille',

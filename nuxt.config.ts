@@ -2,7 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',
   devtools: { enabled: false },
-  // Police auto-hébergée (pas d'appel à Google Fonts)
+  // Animated transition between the home page and project pages (View Transitions API).
+  // Ignored by browsers that don't support it; disabled in CSS when the user prefers reduced motion.
+  experimental: { viewTransition: true },
+  // Self-hosted font (no request to Google Fonts)
   css: ['@fontsource-variable/archivo/wdth.css', '~/assets/css/main.css'],
   app: {
     head: {
@@ -23,7 +26,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    // Les pages projet sont trouvées en suivant les liens de l'accueil
+    // Project pages are found by following the home page links
     prerender: { routes: ['/'], crawlLinks: true },
   },
 })

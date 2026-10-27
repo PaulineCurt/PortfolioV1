@@ -4,12 +4,14 @@ const props = defineProps<{ items: string[]; duration?: number }>()
 
 const track = ref<HTMLElement | null>(null)
 let cleanup: (() => void) | null = null
+let unmounted = false
 
 onMounted(async () => {
   if (!track.value) return
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
   const { gsap } = await import('gsap')
+  if (unmounted || !track.value) return // unmounted while GSAP was loading
 
   const loop = gsap.to(track.value, {
     xPercent: -50,
@@ -58,7 +60,10 @@ onMounted(async () => {
   }
 })
 
-onBeforeUnmount(() => cleanup?.())
+onBeforeUnmount(() => {
+  unmounted = true
+  cleanup?.()
+})
 </script>
 
 <template>

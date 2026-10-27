@@ -15,7 +15,6 @@ export interface ProcessStep {
 }
 
 export interface ProjectDetails {
-  tagline: string
   lead: string
   role: string
   status: string
@@ -32,7 +31,7 @@ export interface Project {
   slug: string
   title: string
   context: string
-  summary: string
+  tagline: string // short sentence: home list and top of the project page
   stack: string[]
   tint: string
   logo?: string
@@ -47,13 +46,11 @@ export const projects: Project[] = frenchSpacing([
     slug: 'equilib',
     title: 'EquiLib',
     context: 'Projet personnel, conçu et développé seule',
-    summary:
-      'Une plateforme web de prise de rendez-vous vétérinaires pour les chevaux. Les propriétaires trouvent un vétérinaire équin, réservent une consultation et suivent le dossier de leurs chevaux ; les vétérinaires gèrent leur agenda, leurs patients et leur facturation.',
+    tagline: 'La prise de rendez-vous vétérinaire, pensée pour les chevaux',
     stack: ['Nuxt 4', 'Laravel 13', 'PostgreSQL', 'Docker', 'PWA'],
     tint: '#cfdcd3',
     logo: '/projets/equilib/logo.webp',
     details: {
-      tagline: 'La prise de rendez-vous vétérinaire, pensée pour les chevaux',
       lead:
         "Application full-stack inspirée de Doctolib, conçue pour le monde équin. Elle met en relation deux types d'utilisateurs, chacun avec son propre espace : les propriétaires et les vétérinaires.",
       role: 'Conception, front, API et DevOps',
@@ -145,8 +142,7 @@ export const projects: Project[] = frenchSpacing([
     slug: 'cyclerun',
     title: 'CycleRun',
     context: 'Projet personnel, conçu et développé seule',
-    summary:
-      "Une app mobile de course à pied dont le plan 5 km s'adapte au cycle menstruel : durée de cycle apprise pour chaque utilisatrice, plan généré à partir d'une méthodologie publiée et allégé selon la phase.",
+    tagline: "L'app de course qui s'adapte à ton cycle",
     stack: ['React Native', 'Expo', 'Laravel 13', 'PostgreSQL', '233 tests'],
     tint: '#ecd3d6',
     logo: '/projets/cyclerun/logo.webp',
@@ -157,7 +153,6 @@ export const projects: Project[] = frenchSpacing([
       { src: '/projets/cyclerun/profil.webp', alt: "Profil : durées du cycle et des règles calculées à partir de l'historique" },
     ],
     details: {
-      tagline: "L'app de course qui s'adapte à ton cycle",
       lead:
         "Application mobile de coaching running dont le plan d'entraînement s'ajuste au cycle menstruel. Projet perso conçu et développé seule, du design à l'API.",
       role: 'Conception, design, mobile et API',
@@ -227,8 +222,7 @@ export const projects: Project[] = frenchSpacing([
     slug: 'smile',
     title: 'Smile',
     context: 'Refonte UX/UI et intégration, projet professionnel',
-    summary:
-      "Une application web d'auto-évaluation en santé mentale destinée aux étudiants d'une université. La V1 était sortie en production dans l'urgence : j'ai repris seule son interface, des maquettes jusqu'à l'intégration en Nuxt. La refonte est en production et les retours sont bons.",
+    tagline: 'Une refonte UX/UI, de la maquette à la production',
     stack: ['UX/UI', 'Design system', 'Nuxt'],
     tint: '#d3dbea',
     logo: '/projets/smile/logo.webp',
@@ -251,7 +245,6 @@ export const projects: Project[] = frenchSpacing([
       },
     ],
     details: {
-      tagline: 'Une refonte UX/UI, de la maquette à la production',
       lead:
         "Une application web d'auto-évaluation en santé mentale destinée aux étudiants d'une université. J'ai repris seule son interface, des maquettes jusqu'à l'intégration en Nuxt.",
       role: 'UX/UI et intégration Nuxt, en solo',

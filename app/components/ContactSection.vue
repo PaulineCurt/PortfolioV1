@@ -7,7 +7,9 @@ const year = new Date().getFullYear()
 <template>
   <section id="contact" class="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <h2 id="contact-title" class="display contact-title">On en<br />parle&nbsp;?</h2>
+      <h2 id="contact-title" class="display contact-title">
+        <BouncyText :lines="site.contactTitle" />
+      </h2>
       <div class="contact-row">
         <a class="mail" :href="`mailto:${site.email}`">{{ site.email }}</a>
         <div class="contact-links">
@@ -25,7 +27,7 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .contact {
-  background: var(--band);
+  background: var(--contact-bg);
   padding-top: 120px;
   padding-bottom: 56px;
 }

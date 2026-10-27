@@ -8,9 +8,7 @@ import { projects } from '~/data/projects'
     <section id="top" class="wrap hero" aria-labelledby="hero-title">
       <div class="hero-main">
         <h1 id="hero-title" class="display hero-title">
-          <template v-for="(line, i) in site.headline" :key="line">
-            {{ line }}<br v-if="i < site.headline.length - 1" />
-          </template>
+          <BouncyText :lines="site.headline" />
         </h1>
         <p class="lead intro">{{ site.intro }}</p>
         <div class="actions hero-actions">
@@ -38,27 +36,7 @@ import { projects } from '~/data/projects'
         <h2 id="projets-title" class="display section-title">Projets</h2>
         <p class="muted">Trois projets où j'ai pris en charge l'interface de bout en bout, de la conception au code.</p>
       </div>
-
-      <article v-for="p in projects" :id="p.slug" :key="p.slug" class="split project" :aria-labelledby="`${p.slug}-title`">
-        <div class="project-text">
-          <p class="muted small">{{ p.context }}</p>
-          <h3 :id="`${p.slug}-title`" class="display project-title">{{ p.title }}</h3>
-          <p class="summary">{{ p.summary }}</p>
-          <ul class="plain-list stack-list">
-            <li v-for="t in p.stack" :key="t">{{ t }}</li>
-          </ul>
-          <div v-if="p.details || p.link" class="actions project-actions">
-            <NuxtLink v-if="p.details" class="pill pill-solid" :to="`/projets/${p.slug}`">
-              Voir le projet<span class="visually-hidden"> {{ p.title }}</span>
-            </NuxtLink>
-            <a v-if="p.link" class="pill" :href="p.link.href" target="_blank" rel="noopener">
-              {{ p.link.label }}
-            </a>
-          </div>
-        </div>
-        <!-- Sur l'accueil, seulement le logo : les visuels sont sur la page du projet -->
-        <ProjectMedia :logo="p.logo" :tint="p.tint" ratio="16 / 10" :placeholder="p.title" />
-      </article>
+      <ProjectIndex :projects="projects" />
     </section>
 
     <section class="wrap skills" aria-labelledby="skills-title">
@@ -88,6 +66,7 @@ import { projects } from '~/data/projects'
 .hero-title {
   font-size: clamp(52px, 8.6vw, 132px);
 }
+
 
 .intro {
   max-width: 34ch;
@@ -149,35 +128,6 @@ import { projects } from '~/data/projects'
 
 .section-head .muted {
   max-width: 36ch;
-}
-
-.project {
-  border-top: 1px solid var(--line);
-  padding: 40px 0 72px;
-  scroll-margin-top: 24px;
-}
-
-.project-title {
-  font-size: clamp(48px, 5vw, 64px);
-  margin-top: 12px;
-}
-
-.summary {
-  margin-top: 20px;
-  max-width: 42ch;
-}
-
-.stack-list {
-  margin-top: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 40px;
-  font-size: 15px;
-  color: var(--ink-2);
-}
-
-.project-actions {
-  margin-top: 28px;
 }
 
 .skills {

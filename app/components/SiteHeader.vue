@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { site } from '~/data/site'
+
+// By default, "Contact" points to the page's own contact band; a page without one (the 404) targets the home page's
+withDefaults(defineProps<{ contactHref?: string }>(), { contactHref: '#contact' })
 </script>
 
 <template>
@@ -7,7 +10,7 @@ import { site } from '~/data/site'
     <NuxtLink to="/" class="caps brand">{{ site.name }}</NuxtLink>
     <nav aria-label="Navigation principale">
       <NuxtLink class="pill" to="/#projets">Projets</NuxtLink>
-      <a class="pill pill-solid" href="#contact">Contact</a>
+      <a class="pill pill-solid" :href="contactHref">Contact</a>
     </nav>
   </header>
 </template>

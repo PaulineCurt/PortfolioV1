@@ -1,7 +1,7 @@
 :root {
   --bg: #f4f4f2;
   --surface: #ffffff;
-  --band: #e8e8e4;
+  --contact-bg: #e8e8e4;
   --ink: #141414;
   --ink-2: #3d3c39;
   --muted: #6b6964;
@@ -33,6 +33,12 @@ body {
   font-size: 17px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Hide the native cursor only while the custom dot cursor is active (mouse + JS, see CustomCursor.vue) */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
 }
 
 img {
@@ -116,15 +122,44 @@ p {
   top: 16px;
 }
 
+/* Page transitions: the title and the colour block slide into place,
+   the rest of the page cross-fades. */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+/* The colour block resizes like a card: rounded corners, clipped content,
+   and the old content (the logo) fades out quickly so it doesn't get stretched */
+::view-transition-group(*.project-block) {
+  overflow: clip;
+  border-radius: var(--radius);
+}
+
+::view-transition-old(*.project-block) {
+  animation-duration: 0.15s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
-/* Utilitaires partagés par les pages et les composants */
+/* Utilities shared by pages and components */
 
-/* Petit titre en capitales étroites (cartes, groupes, étapes) ; la taille reste locale */
+/* Small condensed uppercase heading (cards, groups, steps); font size stays local */
 .caps {
   margin: 0;
   font-weight: 800;
@@ -133,13 +168,13 @@ p {
   line-height: 1.1;
 }
 
-/* Texte d'introduction, un cran au-dessus du corps */
+/* Intro text, one step above body size */
 .lead {
   font-size: 21px;
   line-height: 1.4;
 }
 
-/* Carte blanche arrondie */
+/* Rounded white card */
 .card {
   background: var(--surface);
   border-radius: var(--radius);
@@ -153,14 +188,14 @@ p {
   color: var(--ink-2);
 }
 
-/* Rangée de boutons en pilule */
+/* Row of pill buttons */
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-/* Mise en page texte (5/12) + contenu (7/12), empilée sur mobile */
+/* Text (5/12) + content (7/12) layout, stacked on mobile */
 .split {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -168,7 +203,7 @@ p {
   align-items: start;
 }
 
-/* Liste sans puces ni retrait */
+/* List without bullets or indentation */
 .plain-list {
   list-style: none;
   margin: 0;

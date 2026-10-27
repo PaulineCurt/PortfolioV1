@@ -5,7 +5,7 @@ import { projects } from '~/data/projects'
 const route = useRoute()
 const found = projects.find((p) => p.slug === route.params.slug)
 
-// Seuls les projets qui ont des `details` ont une page
+// Only projects with `details` get a page
 if (!found?.details) {
   throw createError({ statusCode: 404, statusMessage: 'Projet introuvable', fatal: true })
 }
@@ -13,8 +13,16 @@ if (!found?.details) {
 const project = found
 const details = found.details
 
+// The back link targets the project we came from, so the transition finds it in place.
+// Transition names shared with the home page: the title and the colour block morph into these.
+// A name must be unique on the page: only the first colour block gets it.
+const titleTransition = { viewTransitionName: `title-${project.slug}` }
+const colorBlock = project.screens?.length ? 'screens' : details.captures?.length ? 'captures' : project.process ? 'process' : undefined
+const blockTransition = (block: typeof colorBlock) =>
+  block === colorBlock ? { viewTransitionName: `project-${project.slug}`, viewTransitionClass: 'project-block' } : undefined
+
 useSeoMeta({
-  title: `${project.title}, ${details.tagline.toLowerCase()} · ${site.name}`,
+  title: `${project.title} — ${project.tagline} · ${site.name}`,
   description: details.lead,
 })
 </script>
@@ -23,11 +31,20 @@ useSeoMeta({
   <main id="contenu">
     <article :aria-labelledby="`${project.slug}-title`">
       <header class="wrap hero">
-        <NuxtLink class="pill back" to="/#projets">← Tous les projets</NuxtLink>
+        <NuxtLink class="pill back" :to="`/#${project.slug}`">← Tous les projets</NuxtLink>
         <p class="muted small context">{{ project.context }}</p>
-        <h1 :id="`${project.slug}-title`" class="display hero-title">{{ project.title }}</h1>
+        <div class="title-row">
+          <h1 :id="`${project.slug}-title`" class="display hero-title" :style="titleTransition">{{ project.title }}</h1>
+          <!-- Decorative: the project name is right next to it -->
+          <img v-if="project.logo" class="hero-logo" :src="project.logo" alt="" />
+        </div>
         <div class="split hero-foot">
-          <p class="lead tagline">{{ details.tagline }}</p>
+          <div>
+            <p class="lead tagline">{{ project.tagline }}</p>
+            <a v-if="project.link" class="pill project-link" :href="project.link.href" target="_blank" rel="noopener">
+              {{ project.link.label }}
+            </a>
+          </div>
           <dl class="facts">
             <div>
               <dt>Rôle</dt>
@@ -46,7 +63,11 @@ useSeoMeta({
       </header>
 
       <div v-if="project.screens?.length" class="wrap">
-        <ul class="plain-list gallery" :style="{ background: project.tint }" aria-label="Captures d'écran">
+        <ul
+          class="plain-list gallery"
+          :style="{ background: project.tint, ...blockTransition('screens') }"
+          aria-label="Captures d'écran"
+        >
           <li v-for="s in project.screens" :key="s.src">
             <img :src="s.src" :alt="s.alt" width="780" height="1588" />
           </li>
@@ -54,11 +75,16 @@ useSeoMeta({
       </div>
 
       <div v-if="details.captures?.length" class="wrap">
-        <CaptureGallery :captures="details.captures" :tint="project.tint" />
+        <CaptureGallery :captures="details.captures" :tint="project.tint" :style="blockTransition('captures')" />
       </div>
 
       <div v-if="project.process" class="wrap">
-        <ProcessSteps :steps="project.process" :tint="project.tint" :logo="project.logo" :level="2" />
+        <ProcessSteps
+          :steps="project.process"
+          :tint="project.tint"
+          :level="2"
+          :style="blockTransition('process')"
+        />
       </div>
 
       <p v-if="details.note" class="wrap muted small note">{{ details.note }}</p>
@@ -112,7 +138,7 @@ useSeoMeta({
       </section>
 
       <div class="wrap back-bottom">
-        <NuxtLink class="pill" to="/#projets">← Tous les projets</NuxtLink>
+        <NuxtLink class="pill" :to="`/#${project.slug}`">← Tous les projets</NuxtLink>
       </div>
     </article>
 
@@ -130,9 +156,26 @@ useSeoMeta({
   margin-top: 48px;
 }
 
+.title-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px 32px;
+  margin-top: 12px;
+}
+
 .hero-title {
   font-size: clamp(64px, 14vw, 200px);
-  margin-top: 12px;
+}
+
+.hero-logo {
+  width: auto;
+  height: clamp(72px, 11vw, 168px);
+}
+
+.project-link {
+  margin-top: 20px;
 }
 
 .hero-foot {
@@ -185,7 +228,7 @@ useSeoMeta({
   padding-bottom: 72px;
 }
 
-/* Filet aligné sur le contenu, pas sur la gouttière */
+/* Rule aligned with the content, not the gutter */
 .block::before {
   content: '';
   grid-column: 1 / -1;
@@ -276,7 +319,7 @@ useSeoMeta({
   .block:first-of-type {
     margin-top: 64px;
   }
-  /* En mobile, les captures défilent horizontalement */
+  /* On mobile, the screenshots scroll horizontally */
   .gallery {
     grid-template-columns: none;
     grid-auto-flow: column;
