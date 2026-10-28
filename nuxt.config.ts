@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',
+  modules: ['@vercel/analytics'],
   devtools: { enabled: false },
   // Animated transition between the home page and project pages (View Transitions API).
   // Ignored by browsers that don't support it; disabled in CSS when the user prefers reduced motion.
