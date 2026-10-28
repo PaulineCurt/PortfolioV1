@@ -14,6 +14,7 @@ const year = new Date().getFullYear()
         <a class="mail" :href="`mailto:${site.email}`">{{ site.email }}</a>
         <div class="contact-links">
           <a :href="site.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a :href="site.github" target="_blank" rel="noopener">GitHub</a>
           <a v-if="site.cv" :href="site.cv" download>Mon CV</a>
         </div>
       </div>

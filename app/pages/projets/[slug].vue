@@ -21,8 +21,9 @@ const colorBlock = project.screens?.length ? 'screens' : details.captures?.lengt
 const blockTransition = (block: typeof colorBlock) =>
   block === colorBlock ? { viewTransitionName: `project-${project.slug}`, viewTransitionClass: 'project-block' } : undefined
 
+const pageTitle = `${project.title} — ${project.tagline} · ${site.name}`
 useSeoMeta({
-  title: `${project.title} — ${project.tagline} · ${site.name}`,
+  title: pageTitle,
   description: details.lead,
 })
 </script>

@@ -3,6 +3,13 @@ import { frenchSpacing } from '~/utils/typo'
 export const site = frenchSpacing({
   name: 'Pauline',
   fullName: 'Pauline Curt',
+  url: 'https://curt-pauline.vercel.app',
+  // Default page title and description
+  seo: {
+    title: 'Pauline, développeuse front-end Vue et Nuxt',
+    description:
+      "Portfolio de Pauline, développeuse front-end Vue et Nuxt : des interfaces soignées, du composant jusqu'à l'endpoint.",
+  },
   headline: ['Développeuse', 'front-end', 'Vue et Nuxt'],
   contactTitle: ['On en', 'parle ?'],
   // Error page (app/error.vue)
@@ -25,7 +32,8 @@ export const site = frenchSpacing({
   availability: '',
   email: 'curtpauline@gmail.com',
   linkedin: 'https://www.linkedin.com/in/pauline-curt-488a52254/',
-  cv: '/cv-pauline.pdf',
+  github: 'https://github.com/PaulineCurt',
+  cv: '/Curt_Pauline_CV.pdf',
   photo: '/pauline.webp',
   now: {
     label: 'Mon poste actuel',

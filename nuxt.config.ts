@@ -10,14 +10,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'fr' },
-      title: 'Pauline, développeuse front-end Vue et Nuxt',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        {
-          name: 'description',
-          content:
-            "Portfolio de Pauline, développeuse front-end Vue et Nuxt : des interfaces soignées, du composant jusqu'à l'endpoint.",
-        },
         { name: 'theme-color', content: '#F4F4F2' },
       ],
       link: [
